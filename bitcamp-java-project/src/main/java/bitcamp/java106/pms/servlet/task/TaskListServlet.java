@@ -54,6 +54,7 @@ public class TaskListServlet extends HttpServlet {
             if (team == null) {
                 out.printf("<p>'%s' 팀은 존재하지 않습니다.\n</p>",
                         teamName);
+                out.println("<a href='../index.html'>index.html로 돌아가기</a>");
                 return;
             }
             List<Task> list = taskDao.selectList(team.getName());
@@ -75,8 +76,10 @@ public class TaskListServlet extends HttpServlet {
                 out.println("</tr>");
             }
             out.println("</table>");
+            out.println("<a href='../index.html'>index.html로 돌아가기</a>");
         } catch (Exception e) {
             out.println("<p>목록 가져오기 실패!</p>");
+            out.println("<a href='../index.html'>index.html로 돌아가기</a>");
             e.printStackTrace(out);
         }
         out.println("</body>");
