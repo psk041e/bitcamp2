@@ -1,5 +1,4 @@
 package bitcamp.java106.pms;
-
 import bitcamp.java106.pms.server.ServerRequest;
 
 public class Test {
@@ -11,12 +10,13 @@ public class Test {
         
         ServerRequest request = new ServerRequest(str);
         
-        System.out.println("SangKyeongLee");
+        System.out.println("aaaaaseogyeong");
         System.out.println(request.getServerPath());
-        System.out.println("SangKyeongLee");
         System.out.println(request.getParameter("title"));
         System.out.println(request.getParameter("content"));
         System.out.println(request.getParameter("age"));
+
+
         System.out.println("SangKyeongLee");
         System.out.println("SangKyeongLee");
         System.out.println("충돌");
