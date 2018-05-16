@@ -57,17 +57,18 @@ public class TaskListServlet extends HttpServlet {
                 return;
             }
             List<Task> list = taskDao.selectList(team.getName());
-            out.println("<p><a href='form.html>해당 작업 목록</a></p>");
+            out.println("<p><a href='form.html'>작업자 추가</a></p>");
             out.println("<table border='1'>");
             out.println("<tr>");
             out.println("   <th>번호</th><th>작업명</th><th>시작일</th>"
-                    +      "<th>종료일</th><th>회원명</th>");
+                    +      "<th>종료일</th><th>작업자</th>");
             out.println("</tr>");
+            
             for (Task task : list) {
                 out.println("<tr>");
-                out.printf("    <td><a href='view?no=%d'>%s</a></td>"
+                out.printf("    <td><a href='view?no=%d'>%d</a></td><td>%s</td>"
                         +      "<td>%s</td>,<td>%s</td>,<td>%s</td>,<td>%s</td>\n", 
-                        task.getNo(), task.getTitle(), 
+                        task.getNo(), task.getNo(), task.getTitle(), 
                         task.getStartDate(), task.getEndDate(),
                         (task.getWorker() == null) ? 
                                 "-" : task.getWorker().getId());

@@ -55,11 +55,12 @@ public class TaskAddServlet extends HttpServlet {
         out.println("<html>");
         out.println("<head>");
         out.println("<meta charset='UTF-8'>");
-        out.println("<meta http-equiv='Refresh' content='1;url=list'>");
-        out.println("<title>Task 등록</title>");
+        out.printf("<meta http-equiv='Refresh' content='1;url=list?teamName=%s'>\n",
+                task.getTeam().getName());
+        out.println("<title>작업 등록</title>");
         out.println("</head>");
         out.println("<body>");
-        out.println("<h1>Task 등록 결과</h1>");
+        out.println("<h1>작업 등록 결과</h1>");
         try {
             taskDao.insert(task);
             out.println("<p>등록 성공!</p>");
