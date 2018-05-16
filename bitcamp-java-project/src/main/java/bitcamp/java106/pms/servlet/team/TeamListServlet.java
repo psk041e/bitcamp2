@@ -49,7 +49,7 @@ public class TeamListServlet extends HttpServlet {
         try {
             List<Team> list = teamDao.selectList();
             
-            out.println("<p><a href='form.html'>새 회원 추가</a></p>");
+            out.println("<p><a href='form.html'>새 팀 등록</a></p>");
             out.println("<table border='1'>");
             out.println("<tr>");
             out.println("    <th>팀명</th><th>인원</th><th>활동기간</th>");
