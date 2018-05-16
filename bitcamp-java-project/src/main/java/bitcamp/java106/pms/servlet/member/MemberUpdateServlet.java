@@ -1,45 +1,67 @@
-// Controller 규칙에 따라 메서드 작성
 package bitcamp.java106.pms.servlet.member;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 
-import org.springframework.stereotype.Component;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-import bitcamp.java106.pms.controller.Controller;
 import bitcamp.java106.pms.dao.MemberDao;
 import bitcamp.java106.pms.domain.Member;
 import bitcamp.java106.pms.server.ServerRequest;
 import bitcamp.java106.pms.server.ServerResponse;
+import bitcamp.java106.pms.servlet.InitServlet;
 
-@Component("/member/update")
-public class MemberUpdateServlet implements Controller {
+
+@SuppressWarnings("serial")
+@WebServlet("/member/update")
+public class MemberUpdateServlet extends HttpServlet {
 
     MemberDao memberDao;
     
-    public MemberUpdateServlet(MemberDao memberDao) {
-        this.memberDao = memberDao;
+    public void init() throws ServletException{ 
+        memberDao = InitServlet.getApplicationContext().getBean(MemberDao.class);
     }
 
     @Override
-    public void service(ServerRequest request, ServerResponse response) {
-        PrintWriter out = response.getWriter();
+    protected void doPost(
+            HttpServletRequest request, 
+            HttpServletResponse response) throws ServletException, IOException {
         
+        request.setCharacterEncoding("UTF-8");
         Member member = new Member();
         member.setId(request.getParameter("id"));
         member.setEmail(request.getParameter("email"));
         member.setPassword(request.getParameter("password"));
         
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        
+        out.println("<!DOCTYPE html>");
+        out.println("<html>");
+        out.println("<head>");
+        out.println("<meta charset='UTF-8'>");
+        out.println("<meta http-equiv='Refresh' content='1;url=list'>");
+        out.println("<title>회원 정보 변경</title>");
+        out.println("</head>");
+        out.println("<body>");
+        out.println("<h1>회원정보 변경 결과</h1>");
         try {
             int count = memberDao.update(member);
             if (count == 0) {
-                out.println("해당 아이디의 회원을 찾을 수 없습니다.");
+                out.println("<p>해당 아이디의 회원을 찾을 수 없습니다.</p>");
             } else {
-                out.println("변경하였습니다.");
+                out.println("<p>변경하였습니다.</p>");
             }
         } catch (Exception e) {
-            out.println("변경 실패!");
+            out.println("<p>변경 실패!</p>");
             e.printStackTrace(out);
         }  
+        out.println("</body>");
+        out.println("</html>");
     }
 
 }
