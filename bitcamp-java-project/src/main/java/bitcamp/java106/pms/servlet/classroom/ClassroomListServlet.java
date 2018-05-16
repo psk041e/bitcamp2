@@ -48,20 +48,31 @@ public class ClassroomListServlet extends HttpServlet {
             
             out.println("<p><a href='form.html'>새 수업 추가</a></p>");
             out.println("<table border='1'>");
+            out.println("<form action='update' method='post'>");
             out.println("<tr>");
-            out.println("    <th>번호</th><th>수업명</th><th>시작일</th><th>종료일</th><th>강의실</th>");
+            out.println("    <th>번호</th><th>수업명</th><th>시작일</th><th>종료일</th><th>강의실</th><th>삭제</th><th>변경</th>");
             out.println("</tr>");
             for (Classroom classroom : list) {
                 out.println("<tr>");
-                out.printf("    <td>%d</td><td><a href='view?no=%d'>%s</a></td><td>%s</td><td>%s</td><td>%s</td>\n",
+                out.printf("    <td>%d</td>"
+                        + "<td>%s</td>"
+                        + "<td><input type='date' name='startDate' value=%s></td>"
+                        + "<td><input type='date' name='endDate' value=%s></td>"
+                        + "<td><input type='text' name='room' value=%s></td>"
+                        + "<td><a href='delete?no=%d'>삭제</a></td>"
+                        + "<td><button>변경</button></td>\n",
                     classroom.getNo(), 
-                    classroom.getNo(),
                     classroom.getTitle(), 
                     classroom.getStartDate(),
                     classroom.getEndDate(),
-                    classroom.getRoom());
+                    classroom.getRoom(),
+                    classroom.getNo(),
+                    classroom.getNo());
                 out.println("</tr>");
             }
+            out.println("</form>");
+            out.println("</table>");
+            
         } catch (Exception e) {
             out.println("<p>목록 가져오기 실패!</p>");
             e.printStackTrace(out);
