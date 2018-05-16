@@ -52,9 +52,9 @@ public class MemberAddServlet extends HttpServlet {
         
         try {
             memberDao.insert(member);
-            out.println("등록 성공!");
+            out.println("<p>등록 성공!</p>");
         } catch (Exception e) {
-            out.println("등록 실패!");
+            out.println("<p>등록 실패!</p>");
             e.printStackTrace(out);
         }
         out.println("</body>");
