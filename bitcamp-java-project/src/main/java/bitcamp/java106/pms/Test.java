@@ -18,6 +18,8 @@ public class Test {
         System.out.println(request.getParameter("content"));
         System.out.println(request.getParameter("age"));
         System.out.println("SangKyeongLee");
+        System.out.println("SangKyeongLee");
+        System.out.println("SangKyeongLee");
 
     }
 
