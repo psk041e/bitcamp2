@@ -29,6 +29,7 @@ public class TeamViewServlet extends HttpServlet {
     protected void doGet(
             HttpServletRequest request, 
             HttpServletResponse response) throws ServletException, IOException {
+        
         String name = request.getParameter("name");
         
         response.setContentType("text/html;charset=UTF-8");
@@ -68,7 +69,7 @@ public class TeamViewServlet extends HttpServlet {
         out.println("</p>");
         out.println("</form>");
         out.println("</body>");
-        out.println("</html>");
+        out.println("</html>"); 
     }
 }
 
