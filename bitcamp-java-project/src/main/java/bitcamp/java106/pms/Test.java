@@ -11,10 +11,13 @@ public class Test {
         
         ServerRequest request = new ServerRequest(str);
         
+        System.out.println("Hello!! 5팀 화이팅!!");
         System.out.println(request.getServerPath());
         System.out.println(request.getParameter("title"));
         System.out.println(request.getParameter("content"));
         System.out.println(request.getParameter("age"));
+        System.out.println("Bye!!");
+        
         
 
     }
