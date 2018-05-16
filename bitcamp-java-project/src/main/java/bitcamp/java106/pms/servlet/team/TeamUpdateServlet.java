@@ -17,6 +17,7 @@ import bitcamp.java106.pms.server.ServerRequest;
 import bitcamp.java106.pms.server.ServerResponse;
 import bitcamp.java106.pms.servlet.InitServlet;
 
+@SuppressWarnings("serial")
 @WebServlet("/team/update")
 public class TeamUpdateServlet extends HttpServlet {
 
@@ -30,15 +31,17 @@ public class TeamUpdateServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html; charset=utf-8");
-        PrintWriter out = response.getWriter();
         
+        request.setCharacterEncoding("UTF-8");
         Team team = new Team();
         team.setName(request.getParameter("name"));
         team.setDescription(request.getParameter("description"));
         team.setMaxQty(Integer.parseInt(request.getParameter("maxQty")));
         team.setStartDate(Date.valueOf(request.getParameter("startDate")));
         team.setEndDate(Date.valueOf(request.getParameter("endDate")));
+
+        response.setContentType("text/html; charset=utf-8");
+        PrintWriter out = response.getWriter();
         
         out.println("<!DOCTYPE html>");
         out.println("<html>");
