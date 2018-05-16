@@ -28,7 +28,7 @@ public class TeamUpdateServlet extends HttpServlet {
     }
     
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html; charset=utf-8");
         PrintWriter out = response.getWriter();
