@@ -19,6 +19,8 @@ public class Test {
         System.out.println(request.getParameter("age"));
         System.out.println("임현식");
 
+        System.out.println("SangKyeongLee");
+        System.out.println("SangKyeongLee");
     }
 
 }
