@@ -29,7 +29,7 @@ public class ClassroomUpdateServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-        
+        System.out.println(request.getParameter("no"));
         Classroom classroom = new Classroom();
         classroom.setNo(Integer.parseInt(request.getParameter("no")));
         classroom.setTitle(request.getParameter("title"));

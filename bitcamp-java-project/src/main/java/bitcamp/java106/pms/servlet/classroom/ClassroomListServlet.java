@@ -48,14 +48,14 @@ public class ClassroomListServlet extends HttpServlet {
             
             out.println("<p><a href='form.html'>새 수업 추가</a></p>");
             out.println("<table border='1'>");
-            out.println("<form action='update' method='post'>");
             out.println("<tr>");
             out.println("    <th>번호</th><th>수업명</th><th>시작일</th><th>종료일</th><th>강의실</th><th>삭제</th><th>변경</th>");
             out.println("</tr>");
             for (Classroom classroom : list) {
+                out.println("<form action='update' method='post'>");
                 out.println("<tr>");
-                out.printf("    <td>%d</td>"
-                        + "<td>%s</td>"
+                out.printf("    <td><input type='text' name='no' value=%d readonly></td>"
+                        + "<td><input type='text' name='title' value=%s readonly></td>"
                         + "<td><input type='date' name='startDate' value=%s></td>"
                         + "<td><input type='date' name='endDate' value=%s></td>"
                         + "<td><input type='text' name='room' value=%s></td>"
@@ -66,11 +66,10 @@ public class ClassroomListServlet extends HttpServlet {
                     classroom.getStartDate(),
                     classroom.getEndDate(),
                     classroom.getRoom(),
-                    classroom.getNo(),
                     classroom.getNo());
                 out.println("</tr>");
+                out.println("</form>");
             }
-            out.println("</form>");
             out.println("</table>");
             
         } catch (Exception e) {

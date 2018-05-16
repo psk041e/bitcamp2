@@ -44,15 +44,15 @@ public class TaskListServlet extends HttpServlet {
         out.println("<html>");
         out.println("<head>");
         out.println("<meta charset='UTF-8'>");
-        out.println("<title>회원 목록</title>");
+        out.println("<title>작업 목록</title>");
         out.println("</head>");
         out.println("<body>");
-        out.println("<h1>회원 목록</h1>");
+        out.println("<h1>작업 목록</h1>");
         
         try {
             Team team = teamDao.selectOne(teamName);
             if (team == null) {
-                out.printf("<p><a href='form.html>'%s' 팀은 존재하지 않습니다.\n</a></p>",
+                out.printf("<p>'%s' 팀은 존재하지 않습니다.\n</p>",
                         teamName);
                 return;
             }
@@ -61,7 +61,7 @@ public class TaskListServlet extends HttpServlet {
             out.println("<table border='1'>");
             out.println("<tr>");
             out.println("   <th>번호</th><th>작업명</th><th>시작일</th>"
-                    +      "<th>종료일</th><th>팀명</th>");
+                    +      "<th>종료일</th><th>회원명</th>");
             out.println("</tr>");
             for (Task task : list) {
                 out.println("<tr>");
