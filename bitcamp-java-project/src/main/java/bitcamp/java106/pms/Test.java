@@ -18,6 +18,36 @@ public class Test {
 
         System.out.println("SangKyeongLee");
         System.out.println("SangKyeongLee");
+        System.out.println("임현식");
+        System.out.println("충돌");
+        
+        System.out.println("실험");
+        System.out.println("충돌");
+        System.out.println("충돌");
+        System.out.println("충돌");
+        System.out.println("충돌");
+        System.out.println("충돌");
+        System.out.println("충돌");
+        System.out.println("충돌");
+        
+        System.out.println("충돌");
+        System.out.println("충돌");
+        System.out.println("충돌");
+        System.out.println("충돌");
+        System.out.println("충돌");
+        
+        System.out.println("충돌");
+        System.out.println("충돌");
+        System.out.println("충돌");
+        System.out.println("충돌");
+        System.out.println("충돌");
+        System.out.println("충돌");
+        System.out.println("충돌");
+        
+        System.out.println("충돌");
+        System.out.println("충돌");
+        System.out.println("충돌");
+        System.out.println("충돌");
         System.out.println("충돌");
         System.out.println("SangKyeongLee");
         System.out.println("충돌");
