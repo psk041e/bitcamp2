@@ -13,9 +13,11 @@ public class Test {
         
         System.out.println("aaaaaseogyeong");
         System.out.println(request.getServerPath());
+
         System.out.println(request.getParameter("title"));
         System.out.println(request.getParameter("content"));
         System.out.println(request.getParameter("age"));
+
 
     }
 
