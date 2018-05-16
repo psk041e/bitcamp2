@@ -60,7 +60,7 @@ public class TeamUpdateServlet extends HttpServlet {
             out.println("<p>변경 실패!</p>");
             e.printStackTrace(out);
         }  
-        out.println("</body>");
+        out.println("</body>"); 
         out.println("</html>"); 
     }
 }
