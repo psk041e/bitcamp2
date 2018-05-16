@@ -46,7 +46,7 @@ public class BoardListServlet extends HttpServlet {
         try {
             List<Board> list = boardDao.selectList();
             
-            out.println("<p><a href='form.html'>새 글</a></p>");
+            out.println("<p><a href='form.html'>[새 글 추가]</a></p>");
             out.println("<table border='1'>");
             out.println("<tr>");
             out.println("    <th>번호</th><th>제목</th><th>등록</th>");
@@ -61,6 +61,7 @@ public class BoardListServlet extends HttpServlet {
                 out.println("</tr>");
             }
             out.println("</table>");
+            out.println("<a href='../index.html'>[첫 화면]</a>");
         } catch (Exception e) {
             out.println("<p>목록 가져오기 실패!</p>");
             e.printStackTrace(out);

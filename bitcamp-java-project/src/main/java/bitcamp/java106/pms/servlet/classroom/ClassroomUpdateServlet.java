@@ -28,9 +28,10 @@ public class ClassroomUpdateServlet extends HttpServlet {
     
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
         request.setCharacterEncoding("UTF-8");
-        System.out.println(request.getParameter("no"));
         Classroom classroom = new Classroom();
+        
         classroom.setNo(Integer.parseInt(request.getParameter("no")));
         classroom.setTitle(request.getParameter("title"));
         classroom.setStartDate(Date.valueOf(request.getParameter("startDate")));
@@ -48,7 +49,7 @@ public class ClassroomUpdateServlet extends HttpServlet {
         out.println("<title>수업 정보 변경</title>");
         out.println("</head>");
         out.println("<body>");
-        out.println("<h1>수업정보 변경 결과</h1>");
+        out.println("<h1>수업 정보 변경 결과</h1>");
         
         try {
             int count = classroomDao.update(classroom);

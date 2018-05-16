@@ -46,10 +46,10 @@ public class ClassroomListServlet extends HttpServlet {
         try {
             List<Classroom> list = classroomDao.selectList();
             
-            out.println("<p><a href='form.html'>새 수업 추가</a></p>");
+            out.println("<p><a href='form.html'>[새 수업 등록]</a></p>");
             out.println("<table border='1'>");
             out.println("<tr>");
-            out.println("    <th>번호</th><th>수업명</th><th>시작일</th><th>종료일</th><th>강의실</th><th>삭제</th><th>변경</th>");
+            out.println("    <th>번호</th><th>수업명</th><th>시작일</th><th>종료일</th><th>강의실</th><th colspan='2'>옵션</th>");
             out.println("</tr>");
             for (Classroom classroom : list) {
                 out.println("<form action='update' method='post'>");
@@ -71,7 +71,7 @@ public class ClassroomListServlet extends HttpServlet {
                 out.println("</form>");
             }
             out.println("</table>");
-            
+            out.println("<a href='../index.html'>[첫 화면]</a>");            
         } catch (Exception e) {
             out.println("<p>목록 가져오기 실패!</p>");
             e.printStackTrace(out);

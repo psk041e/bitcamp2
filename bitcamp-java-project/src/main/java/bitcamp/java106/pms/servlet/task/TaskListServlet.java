@@ -47,28 +47,27 @@ public class TaskListServlet extends HttpServlet {
         out.println("<title>작업 목록</title>");
         out.println("</head>");
         out.println("<body>");
-        out.println("<h1>작업 목록</h1>");
+        out.printf("<h1>'%s'의 작업 목록</h1>", teamName);
         
         try {
             Team team = teamDao.selectOne(teamName);
             if (team == null) {
                 out.printf("<p>'%s' 팀은 존재하지 않습니다.\n</p>",
                         teamName);
-                out.println("<a href='../index.html'>index.html로 돌아가기</a>");
+                out.println("<a href='../index.html'>[첫화면]</a>");
                 return;
             }
             List<Task> list = taskDao.selectList(team.getName());
-            out.println("<p><a href='form.html'>작업자 추가</a></p>");
+            out.println("<p><a href='form.html'>[작업 추가]</a></p>");
             out.println("<table border='1'>");
             out.println("<tr>");
-            out.println("   <th>번호</th><th>작업명</th><th>시작일</th>"
-                    +      "<th>종료일</th><th>작업자</th>");
+            out.println("   <th>번호</th><th>작업명</th><th>기간</th><th>작업자</th>");
             out.println("</tr>");
             
             for (Task task : list) {
                 out.println("<tr>");
                 out.printf("    <td><a href='view?no=%d'>%d</a></td><td>%s</td>"
-                        +      "<td>%s</td>,<td>%s</td>,<td>%s</td>,<td>%s</td>\n", 
+                        +      "<td>%s ~ %s</td><td>%s</td>\n", 
                         task.getNo(), task.getNo(), task.getTitle(), 
                         task.getStartDate(), task.getEndDate(),
                         (task.getWorker() == null) ? 
@@ -76,10 +75,10 @@ public class TaskListServlet extends HttpServlet {
                 out.println("</tr>");
             }
             out.println("</table>");
-            out.println("<a href='../index.html'>index.html로 돌아가기</a>");
+            out.println("<a href='../index.html'>[첫화면]</a>");
         } catch (Exception e) {
             out.println("<p>목록 가져오기 실패!</p>");
-            out.println("<a href='../index.html'>index.html로 돌아가기</a>");
+            out.println("<a href='../index.html'>[첫화면]</a>");
             e.printStackTrace(out);
         }
         out.println("</body>");

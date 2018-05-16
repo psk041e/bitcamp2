@@ -42,13 +42,13 @@ public class TaskUpdateServlet extends HttpServlet {
         
         request.setCharacterEncoding("UTF-8");
         
-        Task task = new Task()
-                .setNo(Integer.parseInt(request.getParameter("no")))
-                .setTitle(request.getParameter("title"))
-                .setStartDate(Date.valueOf(request.getParameter("startDate")))
-                .setEndDate(Date.valueOf(request.getParameter("endDate")))
-                .setTeam(new Team().setName(request.getParameter("teamName")))
-                .setWorker(new Member().setId(request.getParameter("memberId")));
+        Task task = new Task();
+                task.setNo(Integer.parseInt(request.getParameter("no")));
+                task.setTitle(request.getParameter("title"));
+                task.setStartDate(Date.valueOf(request.getParameter("startDate")));
+                task.setEndDate(Date.valueOf(request.getParameter("endDate")));
+                task.setTeam(new Team().setName(request.getParameter("teamName")));
+                task.setWorker(new Member().setId(request.getParameter("memberId")));
         
         response.setContentType("text/html; charset=utf-8");
         PrintWriter out = response.getWriter();

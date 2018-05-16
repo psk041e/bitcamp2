@@ -46,7 +46,7 @@ public class MemberListServlet extends HttpServlet {
         try {
             List<Member> list = memberDao.selectList();
             
-            out.println("<p><a href='form.html'>새 회원 추가</a></p>");
+            out.println("<p><a href='form.html'>[새 회원 추가]</a></p>");
             out.println("<table border='1'>");
             out.println("<tr>");
             out.println("    <th>회원명</th><th>이메일</th>");
@@ -60,6 +60,7 @@ public class MemberListServlet extends HttpServlet {
                 out.println("</tr>");
             }
             out.println("</table>");
+            out.println("<a href='../index.html'>[첫 화면]</a>");
         } catch (Exception e) {
             out.println("<p>목록 가져오기 실패!</p>");
             e.printStackTrace(out);

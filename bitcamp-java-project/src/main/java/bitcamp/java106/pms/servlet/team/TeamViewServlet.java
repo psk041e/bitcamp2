@@ -63,9 +63,10 @@ public class TeamViewServlet extends HttpServlet {
             out.printf("<p>&s</p>",e.getMessage());
         }
         out.println("<p>");
-        out.println("<a href='list'>목록</a>");
+        out.println("<a href='../index.html'>[첫 화면]</a>");
+        out.println("<a href='list'>[목록]</a>");
         out.println("<button>변경</button>");
-        out.printf("<a href='delete?name=%s'>삭제</a>\n", name);
+        out.printf("<a href='delete?name=%s'>[삭제]</a>\n", name);
         out.println("</p>");
         out.println("</form>");
         out.println("</body>");
