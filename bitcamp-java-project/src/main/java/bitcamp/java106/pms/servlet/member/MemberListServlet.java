@@ -32,7 +32,7 @@ public class MemberListServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/plain; charset=utf-8");
+        response.setContentType("text/html; charset=utf-8");
         PrintWriter out = response.getWriter();
 
         out.println("<!DOCTYPE html>");
