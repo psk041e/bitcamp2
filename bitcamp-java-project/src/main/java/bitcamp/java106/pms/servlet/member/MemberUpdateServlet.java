@@ -61,7 +61,7 @@ public class MemberUpdateServlet extends HttpServlet {
             e.printStackTrace(out);
         }  
         out.println("</body>");
-        out.println("</html>");
+        out.println("</html>"); 
     }
 
 }
