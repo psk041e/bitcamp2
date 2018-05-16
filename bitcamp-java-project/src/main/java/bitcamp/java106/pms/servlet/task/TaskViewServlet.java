@@ -83,9 +83,10 @@ public class TaskViewServlet extends HttpServlet {
             e.printStackTrace(out);
         }
         out.println("<p>");
-        out.println("<a href='javascript:history.back();'>목록</a>");
+        out.println("<a href='../index.html'>[첫 화면]</a>");        
+        out.println("<a href='javascript:history.back();'>[목록]</a>");
         out.println("<button>변경</button>");
-        out.printf("<a href='delete?no=%d'>삭제</a>\n", no);
+        out.printf("<a href='delete?no=%d'>[삭제]</a>\n", no);
         out.println("</p>");
         out.println("</form>");
         out.println("</body>");
