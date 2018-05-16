@@ -58,10 +58,6 @@ public class Test {
         System.out.println("SangKyeongLee");
         System.out.println("충돌");
         
-        System.out.println("SangKyeongLee");
-        System.out.println("SangKyeongLee");
-        System.out.println("충돌");
-        
     }
 
 }
