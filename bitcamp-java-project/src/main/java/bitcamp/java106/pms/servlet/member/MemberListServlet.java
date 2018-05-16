@@ -49,7 +49,7 @@ public class MemberListServlet extends HttpServlet {
             out.println("<p><a href='form.html'>새 글</a></p>");
             out.println("<table border='1'>");
             out.println("<tr>");
-            out.println("    <th>번호</th><th>제목</th><th>등록</th>");
+            out.println("    <th>회원명</th><th>이메일</th><th>비밀번호</th>");
             out.println("</tr>");
             for (Member member : list) {
                 out.println("<tr>");
