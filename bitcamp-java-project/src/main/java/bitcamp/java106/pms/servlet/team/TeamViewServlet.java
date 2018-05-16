@@ -12,10 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import bitcamp.java106.pms.dao.TeamDao;
 import bitcamp.java106.pms.domain.Team;
-import bitcamp.java106.pms.server.ServerRequest;
-import bitcamp.java106.pms.server.ServerResponse;
 import bitcamp.java106.pms.servlet.InitServlet;
 
+@SuppressWarnings("serial")
 @WebServlet("/team/view")
 public class TeamViewServlet extends HttpServlet {
 
@@ -55,7 +54,7 @@ public class TeamViewServlet extends HttpServlet {
             out.printf("<tr><th>설명</th><td><textarea name='description' rows='10' cols='60'>%s</textarea></td></tr>",team.getDescription());
             out.printf("<tr><th>최대인원</th><td><input type='text' name='maxQty' value='%d'></td></tr>",team.getMaxQty());
             out.printf("<tr><th>기간</th><td><input type='date' name='startDate' value='%s'> ~"
-                    + "<input type='date' name='startDate' value='%s'></td></tr>", team.getStartDate(), team.getEndDate());
+                    + "<input type='date' name='endDate' value='%s'></td></tr>", team.getStartDate(), team.getEndDate());
             out.println("</table>");
             
             
