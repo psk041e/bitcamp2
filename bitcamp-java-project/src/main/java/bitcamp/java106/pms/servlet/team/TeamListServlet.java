@@ -56,7 +56,7 @@ public class TeamListServlet extends HttpServlet {
             out.println("</tr>");
             for (Team team : list) {
                 out.println("<tr>");
-                out.printf("<td><a href='view?%s=?'>%s</a></td><td>%d</td><td>%s ~ %s</td>\n", 
+                out.printf("<td><a href='view?name=%s'>%s</a></td><td>%d</td><td>%s ~ %s</td>\n", 
                         team.getName(),
                         team.getName(), 
                         team.getMaxQty(), 
