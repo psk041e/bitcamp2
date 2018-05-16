@@ -53,11 +53,10 @@ public class MemberListServlet extends HttpServlet {
             out.println("</tr>");
             for (Member member : list) {
                 out.println("<tr>");
-                out.printf("    <td>%s</td><td><a href='view?id=%s'>%s</a></td><td>%s</td>\n",
+                out.printf("    <td><a href='view?id=%s'>%s</a></td><td>%s</td>\n",
                     member.getId(), 
                     member.getId(),
-                    member.getEmail(), 
-                    member.getPassword());
+                    member.getEmail()); 
                 out.println("</tr>");
             }
             out.println("</table>");
