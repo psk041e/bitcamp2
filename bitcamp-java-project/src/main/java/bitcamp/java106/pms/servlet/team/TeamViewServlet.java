@@ -75,7 +75,7 @@ public class TeamViewServlet extends HttpServlet {
             
             List<Member> members = teamMemberDao.selectListWithEmail(name);
             out.println("<h2>해당 팀에 해당하는 회원 목록</h2>");
-            out.println("<form action='member/add method='post'>"); // add 링크용
+            out.println("<form action='member/add' method='post'>"); // add 링크용
             out.println("<input type='hidden' name='teamName'>");
             out.println("회원명 입력");
             out.println("<input type='text' name='memberId'>");
@@ -91,7 +91,7 @@ public class TeamViewServlet extends HttpServlet {
             for(Member member : members) {
                 out.printf("<tr><td>%s</td>"    // 아이디명
                         + "<td>%s</td>"     // 이메일
-                        + "<td><a href=member/delete?teamName='%s'&memberId='%s'>삭제</a>" // 삭제여부
+                        + "<td><a href='member/delete?teamName=%s&memberId=%s'>삭제</a>" // 삭제여부
                         + "</tr>/n",
                         member.getId(), member.getEmail(), name, member.getId());
             }
