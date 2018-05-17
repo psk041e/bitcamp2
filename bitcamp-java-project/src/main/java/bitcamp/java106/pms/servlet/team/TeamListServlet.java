@@ -52,7 +52,7 @@ public class TeamListServlet extends HttpServlet {
             out.println("<p><a href='form.html'>[새 팀 등록]</a></p>");
             out.println("<table border='1'>");
             out.println("<tr>");
-            out.println("    <th>팀명</th><th>인원</th><th>활동기간</th>");
+            out.println("    <th>팀명</th><th>인원</th><th>기간</th>");
             out.println("</tr>");
             for (Team team : list) {
                 out.println("<tr>");

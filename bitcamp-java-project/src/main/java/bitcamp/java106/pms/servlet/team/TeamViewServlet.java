@@ -59,7 +59,7 @@ public class TeamViewServlet extends HttpServlet {
             out.println("<table border='1'>");
             out.printf("<tr><th>팀명</th><td><input type='text' name='name' value='%s' readonly></td></tr>",team.getName());
             out.printf("<tr><th>설명</th><td><textarea name='description' rows='10' cols='60'>%s</textarea></td></tr>",team.getDescription());
-            out.printf("<tr><th>최대인원</th><td><input type='text' name='maxQty' value='%d'></td></tr>",team.getMaxQty());
+            out.printf("<tr><th>최대인원</th><td><input type='number' name='maxQty' value='%d'></td></tr>",team.getMaxQty());
             out.printf("<tr><th>기간</th><td><input type='date' name='startDate' value='%s'> ~"
                     + "<input type='date' name='endDate' value='%s'></td></tr>", team.getStartDate(), team.getEndDate());
             out.println("</table>");
@@ -68,34 +68,31 @@ public class TeamViewServlet extends HttpServlet {
             out.println("<a href='list'>[목록]</a>");
             out.println("<button>변경</button>");
             out.printf("<a href='delete?name=%s'>[삭제]</a>\n", name);
-            out.printf("<a href='../task/list?teamName=%s'>작업목록</a>\n",name); // 테스크 이동
+            out.printf("<a href='../task/list?teamName=%s'>[작업목록]</a>\n",name); // 작업 이동
             out.println("</p>");
-            out.println("</form>");
-            
+            out.println("</form><br>");
             
             List<Member> members = teamMemberDao.selectListWithEmail(name);
-            out.println("<h2>해당 팀에 해당하는 회원 목록</h2>");
+            out.println("<h2>팀 회원 등록</h2>");
             out.println("<form action='member/add' method='post'>"); // add 링크용
             out.printf("<input type='hidden' name='teamName' value='%s'>\n", name);
-            out.println("회원명 입력");
+            out.println("회원명 ");
             out.println("<input type='text' name='memberId'>");
-            out.println("<button>회원 등록</button>"); // 제출 : 입력된 회원 추가
-            out.println("</form><br><br>"); // 폼닫기
+            out.println("<button>등록</button>"); // 제출 : 입력된 회원 추가
+            out.println("</form><br>"); // 폼닫기
             
             // 팀멤버 리스트 작성
             out.println("<h2>팀 회원 목록</h2>");
             out.println("<table border='1'>"); // 테이블 정의
-            out.println("<tr><th>아이디</th><th>이메일</th><th>삭제여부</th></tr>"); // 데이터 컬럼명
-            
+            out.println("<tr><th>아이디</th><th>이메일</th><th> </th></tr>"); // 데이터 컬럼명
             // 리스트별로 차례대로 출력
             for(Member member : members) {
                 out.printf("<tr><td>%s</td>"    // 아이디명
                         + "<td>%s</td>"     // 이메일
-                        + "<td><a href='member/delete?teamName=%s&memberId=%s'>삭제</a></td>" // 삭제여부
-                        + "</tr>/n",
+                        + "<td><a href='member/delete?teamName=%s&memberId=%s'>[삭제]</a></td>" // 삭제여부
+                        + "</tr>\n",
                         member.getId(), member.getEmail(), name, member.getId());
             }
-            
             out.println("</table>");
             
             //out.println("<a href=");

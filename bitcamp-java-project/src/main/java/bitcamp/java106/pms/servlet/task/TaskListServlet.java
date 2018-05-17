@@ -56,7 +56,7 @@ public class TaskListServlet extends HttpServlet {
             }
             List<Task> list = taskDao.selectList(team.getName());
             
-            out.printf("<p><a href='add?teamName=%s'>새 작업</a></p>", teamName);
+            out.printf("<p><a href='add?teamName=%s'>[새 작업]</a></p>", teamName);
             out.println("<table border='1'>");
             out.println("<tr>");
             out.println("    <th>번호</th><th>작업명</th><th>기간</th><th>작업자</th>");

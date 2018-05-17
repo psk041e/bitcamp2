@@ -45,7 +45,7 @@ public class TeamAddServlet extends HttpServlet {
         out.println("<html>");
         out.println("<head>");
         out.println("<meta charset='UTF-8'>");
-        //out.println("<meta http-equiv='Refresh' content='1;url=list'>");
+        out.println("<meta http-equiv='Refresh' content='1;url=list'>");
         out.println("<title>팀 등록</title>");
         out.println("</head>");
         out.println("<body>");

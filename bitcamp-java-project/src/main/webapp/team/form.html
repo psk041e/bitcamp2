@@ -2,17 +2,31 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원 등록폼</title>
+<title>팀 등록</title>
 </head>
 <body>
 
 <h1>팀 등록</h1>
 <form action="add" method="post">
-이름: <input type="text" name="name"><br>
-내용: <textarea name="description" rows="10" cols="60"></textarea><br>
-최대인원: <input type="text" name="maxQty"><br>
-시작일: <input type="date" name="startDate"><br>
-종료일: <input type="date" name="endDate"><br>
+<table border='1'>
+<tr>
+    <th>팀명</th><td><input type="text" name="name"></td>
+</tr>
+<tr>
+    <th>설명</th><td><textarea name="description" 
+        rows="6" cols="60"></textarea></td>
+</tr>
+<tr>
+    <th>최대인원</th><td><input type="number" name="maxQty" value="3"></td>
+</tr>
+<tr>
+    <th>시작일</th><td><input type="date" name="startDate"></td>
+</tr>
+<tr>
+    <th>종료일</th><td><input type="date" name="endDate"></td>
+</tr>
+
+</table>
 <button>등록</button>
 <a href='javascript:history.back();'>[취소]</a>
 </form>
