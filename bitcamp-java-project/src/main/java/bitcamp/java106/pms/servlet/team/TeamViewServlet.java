@@ -76,7 +76,7 @@ public class TeamViewServlet extends HttpServlet {
             List<Member> members = teamMemberDao.selectListWithEmail(name);
             out.println("<h2>해당 팀에 해당하는 회원 목록</h2>");
             out.println("<form action='member/add' method='post'>"); // add 링크용
-            out.println("<input type='hidden' name='teamName'>");
+            out.printf("<input type='hidden' name='teamName' value='%s'>\n", name);
             out.println("회원명 입력");
             out.println("<input type='text' name='memberId'>");
             out.println("<button>회원 등록</button>"); // 제출 : 입력된 회원 추가
