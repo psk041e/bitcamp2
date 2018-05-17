@@ -83,7 +83,7 @@ public class TeamViewServlet extends HttpServlet {
             out.println("</form><br><br>"); // 폼닫기
             
             // 팀멤버 리스트 작성
-            out.println("<h2>팀 멤버 리스트</h2>");
+            out.println("<h2>팀 회원 목록</h2>");
             out.println("<table border='1'>"); // 테이블 정의
             out.println("<tr><th>아이디</th><th>이메일</th><th>삭제여부</th></tr>"); // 데이터 컬럼명
             
