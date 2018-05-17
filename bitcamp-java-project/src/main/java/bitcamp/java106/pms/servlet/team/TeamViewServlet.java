@@ -48,13 +48,14 @@ public class TeamViewServlet extends HttpServlet {
         out.println("</head>");
         out.println("<body>");
         out.println("<h1>팀 정보 보기</h1>");
-        out.println("<form action='update' method='post'>");
         try {
             Team team = teamDao.selectOne(name);
     
             if (team == null) {
-                out.println("해당 이름의 팀이 없습니다.");
+                throw new Exception("해당 이름의 팀이 없습니다.");
             } 
+            
+            out.println("<form action='update' method='post'>");
             out.println("<table border='1'>");
             out.printf("<tr><th>팀명</th><td><input type='text' name='name' value='%s' readonly></td></tr>",team.getName());
             out.printf("<tr><th>설명</th><td><textarea name='description' rows='10' cols='60'>%s</textarea></td></tr>",team.getDescription());
@@ -67,12 +68,37 @@ public class TeamViewServlet extends HttpServlet {
             out.println("<a href='list'>[목록]</a>");
             out.println("<button>변경</button>");
             out.printf("<a href='delete?name=%s'>[삭제]</a>\n", name);
+            out.printf("<a href='../task/list?teamName=%s'>작업목록</a>\n",name); // 테스크 이동
             out.println("</p>");
             out.println("</form>");
             
             
-            List<Member> member = teamMemberDao.selectListWithEmail(name);
+            List<Member> members = teamMemberDao.selectListWithEmail(name);
+            out.println("<h2>해당 팀에 해당하는 회원 목록</h2>");
+            out.println("<form action='member/add method='post'>"); // add 링크용
+            out.println("<input type='hidden' name='teamName'>");
+            out.println("회원명 입력");
+            out.println("<input type='text' name='memberId'>");
+            out.println("<button>회원 등록</button>"); // 제출 : 입력된 회원 추가
+            out.println("</form><br><br>"); // 폼닫기
             
+            // 팀멤버 리스트 작성
+            out.println("<h2>팀 멤버 리스트</h2>");
+            out.println("<table border='1'>"); // 테이블 정의
+            out.println("<tr><th>아이디</th><th>이메일</th><th>삭제여부</th></tr>"); // 데이터 컬럼명
+            
+            // 리스트별로 차례대로 출력
+            for(Member member : members) {
+                out.printf("<tr><td>%s</td>"    // 아이디명
+                        + "<td>%s</td>"     // 이메일
+                        + "<td><a href=member/delete?teamName='%s'&memberId='%s'>삭제</a>" // 삭제여부
+                        + "</tr>/n",
+                        member.getId(), member.getEmail(), name, member.getId());
+            }
+            
+            out.println("</table>");
+            
+            //out.println("<a href=");
             
         } catch (Exception e) {
             out.printf("<p>&s</p>",e.getMessage());
