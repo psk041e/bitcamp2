@@ -91,7 +91,7 @@ public class TeamViewServlet extends HttpServlet {
             for(Member member : members) {
                 out.printf("<tr><td>%s</td>"    // 아이디명
                         + "<td>%s</td>"     // 이메일
-                        + "<td><a href='member/delete?teamName=%s&memberId=%s'>삭제</a>" // 삭제여부
+                        + "<td><a href='member/delete?teamName=%s&memberId=%s'>삭제</a></td>" // 삭제여부
                         + "</tr>/n",
                         member.getId(), member.getEmail(), name, member.getId());
             }
