@@ -12,8 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import bitcamp.java106.pms.dao.TaskDao;
 import bitcamp.java106.pms.dao.TeamDao;
-import bitcamp.java106.pms.server.ServerRequest;
-import bitcamp.java106.pms.server.ServerResponse;
 import bitcamp.java106.pms.servlet.InitServlet;
 
 @SuppressWarnings("serial")
@@ -33,7 +31,9 @@ public class TaskDeleteServlet extends HttpServlet {
     protected void doGet(
             HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         int no = Integer.parseInt(request.getParameter("no"));
+        String teamName = request.getParameter("teamName");
 
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
@@ -42,7 +42,8 @@ public class TaskDeleteServlet extends HttpServlet {
         out.println("<html>");
         out.println("<head>");
         out.println("<meta charset='UTF-8'>");
-        out.println("<meta http-equiv='Refresh' content='1;url=list'>");
+        out.printf("<meta http-equiv='Refresh' content='1;url=list?teamName=%s'>\n",
+                teamName);
         out.println("<title>작업 삭제</title>");
         out.println("</head>");
         out.println("<body>");
@@ -56,9 +57,9 @@ public class TaskDeleteServlet extends HttpServlet {
                 out.println("<p>삭제하였습니다.</p>");
             }
         } catch (Exception e) {
-            out.println("<p>삭제 실패!</p>");
-            out.println("<p>잠시 후 다시 시도해주세요. 계속 오류 발생 시</p> ");
-            out.println("<p>담당자(내선: 120)에게 연락주세요.</p>");
+            out.println("<p>삭제 실패!<br>");
+            out.println("잠시 후 다시 시도해주세요. 계속 오류 발생 시<br>");
+            out.println("담당자(내선: 120)에게 연락주세요.</p>");
             e.printStackTrace(out);
         }
         out.println("</body>");
