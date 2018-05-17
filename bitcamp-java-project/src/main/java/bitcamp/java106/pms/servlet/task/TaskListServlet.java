@@ -15,10 +15,7 @@ import bitcamp.java106.pms.dao.TaskDao;
 import bitcamp.java106.pms.dao.TeamDao;
 import bitcamp.java106.pms.domain.Task;
 import bitcamp.java106.pms.domain.Team;
-import bitcamp.java106.pms.server.ServerRequest;
-import bitcamp.java106.pms.server.ServerResponse;
 import bitcamp.java106.pms.servlet.InitServlet;
-
 
 @SuppressWarnings("serial")
 @WebServlet("/task/list")
@@ -34,11 +31,14 @@ public class TaskListServlet extends HttpServlet {
     }
     
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html; charset=utf-8");
-        PrintWriter out = response.getWriter();
+    protected void doGet(
+            HttpServletRequest request, 
+            HttpServletResponse response) throws ServletException, IOException {
+
         String teamName = request.getParameter("teamName");
+
+        response.setContentType("text/html;charset=UTF-8"); // plain?
+        PrintWriter out = response.getWriter();
         
         out.println("<!DOCTYPE html>");
         out.println("<html>");
@@ -52,33 +52,33 @@ public class TaskListServlet extends HttpServlet {
         try {
             Team team = teamDao.selectOne(teamName);
             if (team == null) {
-                out.printf("<p>'%s' 팀은 존재하지 않습니다.\n</p>",
-                        teamName);
-                out.println("<a href='../index.html'>[첫화면]</a>");
-                return;
+                throw new Exception(teamName + " 팀은 존재하지 않습니다.\n");
             }
             List<Task> list = taskDao.selectList(team.getName());
-            out.println("<p><a href='form.html'>[작업 추가]</a></p>");
+            
+            out.printf("<p><a href='add?teamName=%s'>새 작업</a></p>", teamName);
             out.println("<table border='1'>");
             out.println("<tr>");
-            out.println("   <th>번호</th><th>작업명</th><th>기간</th><th>작업자</th>");
+            out.println("    <th>번호</th><th>작업명</th><th>기간</th><th>작업자</th>");
             out.println("</tr>");
             
             for (Task task : list) {
                 out.println("<tr>");
-                out.printf("    <td><a href='view?no=%d'>%d</a></td><td>%s</td>"
-                        +      "<td>%s ~ %s</td><td>%s</td>\n", 
-                        task.getNo(), task.getNo(), task.getTitle(), 
-                        task.getStartDate(), task.getEndDate(),
-                        (task.getWorker() == null) ? 
-                                "-" : task.getWorker().getId());
+                out.printf("    <td>%d</td>"
+                        + "<td><a href='view?no=%d'>%s</a></td>"
+                        + "<td>%s ~ %s</td>"
+                        + "<td>%s</td>\n",
+                    task.getNo(),
+                    task.getNo(),
+                    task.getTitle(), 
+                    task.getStartDate(),
+                    task.getEndDate(),
+                    (task.getWorker() == null)? "-" : task.getWorker().getId());
                 out.println("</tr>");
             }
             out.println("</table>");
-            out.println("<a href='../index.html'>[첫화면]</a>");
         } catch (Exception e) {
-            out.println("<p>목록 가져오기 실패!</p>");
-            out.println("<a href='../index.html'>[첫화면]</a>");
+            out.printf("<p>%s</p>\n", e.getMessage());
             e.printStackTrace(out);
         }
         out.println("</body>");

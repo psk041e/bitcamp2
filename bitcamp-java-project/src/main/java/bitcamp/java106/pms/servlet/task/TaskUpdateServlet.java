@@ -33,37 +33,41 @@ public class TaskUpdateServlet extends HttpServlet {
     public void init() throws ServletException {
         teamDao = InitServlet.getApplicationContext().getBean(TeamDao.class);
         taskDao = InitServlet.getApplicationContext().getBean(TaskDao.class);
-        teamMemberDao = InitServlet.getApplicationContext().getBean(TeamMemberDao.class);
         memberDao = InitServlet.getApplicationContext().getBean(MemberDao.class);
+        teamMemberDao = InitServlet.getApplicationContext().getBean(TeamMemberDao.class);
     }
     
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
-        request.setCharacterEncoding("UTF-8");
-        
-        Task task = new Task();
-                task.setNo(Integer.parseInt(request.getParameter("no")));
-                task.setTitle(request.getParameter("title"));
-                task.setStartDate(Date.valueOf(request.getParameter("startDate")));
-                task.setEndDate(Date.valueOf(request.getParameter("endDate")));
-                task.setTeam(new Team().setName(request.getParameter("teamName")));
-                task.setWorker(new Member().setId(request.getParameter("memberId")));
-        
-        response.setContentType("text/html; charset=utf-8");
-        PrintWriter out = response.getWriter();
+    protected void doPost(
+            HttpServletRequest request, 
+            HttpServletResponse response) throws ServletException, IOException {
 
+        request.setCharacterEncoding("UTF-8");
+        String teamName = request.getParameter("teamName");
+        
+        response.setContentType("text/html;charset=UTF-8"); 
+        PrintWriter out = response.getWriter();
+        
         out.println("<!DOCTYPE html>");
         out.println("<html>");
         out.println("<head>");
         out.println("<meta charset='UTF-8'>");
-        //out.println("<meta http-equiv='Refresh' content='1;url=list'>");
-        out.println("<title>작업 정보 변경</title>");
+        out.printf("<meta http-equiv='Refresh' content='1;url=list?teamName=%s'>\n", teamName);
+        out.println("<title>작업 변경</title>");
         out.println("</head>");
         out.println("<body>");
-        out.println("<h1>작업정보 변경 결과</h1>");
+        out.println("<h1>작업 변경 결과</h1>");
         
         try {
+            Task task = new Task()
+                .setNo(Integer.parseInt(request.getParameter("no")))
+                .setTitle(request.getParameter("title"))
+                .setStartDate(Date.valueOf(request.getParameter("startDate")))
+                .setEndDate(Date.valueOf(request.getParameter("endDate")))
+                .setState(Integer.parseInt(request.getParameter("state")))
+                .setTeam(new Team().setName(request.getParameter("teamName")))
+                .setWorker(new Member().setId(request.getParameter("memberId")));
+            
             int count = taskDao.update(task);
             if (count == 0) {
                 out.println("<p>해당 작업이 없습니다.</p>");
@@ -71,7 +75,7 @@ public class TaskUpdateServlet extends HttpServlet {
                 out.println("<p>변경하였습니다.</p>");
             }
         } catch (Exception e) {
-            out.println("<p>변경 실패!</p>");
+            out.println("변경 실패!");
             e.printStackTrace(out);
         }
         out.println("</body>");
