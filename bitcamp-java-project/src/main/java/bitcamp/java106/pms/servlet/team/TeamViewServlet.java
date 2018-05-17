@@ -3,6 +3,7 @@ package bitcamp.java106.pms.servlet.team;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import bitcamp.java106.pms.dao.TeamDao;
+import bitcamp.java106.pms.dao.TeamMemberDao;
+import bitcamp.java106.pms.domain.Member;
 import bitcamp.java106.pms.domain.Team;
 import bitcamp.java106.pms.servlet.InitServlet;
 
@@ -19,10 +22,12 @@ import bitcamp.java106.pms.servlet.InitServlet;
 public class TeamViewServlet extends HttpServlet {
 
     TeamDao teamDao;
+    TeamMemberDao teamMemberDao;    // 팀맴버용
     
     @Override
     public void init() throws ServletException {
         teamDao = InitServlet.getApplicationContext().getBean(TeamDao.class);
+        teamMemberDao = InitServlet.getApplicationContext().getBean(TeamMemberDao.class);
     }
     
     @Override
@@ -57,20 +62,25 @@ public class TeamViewServlet extends HttpServlet {
             out.printf("<tr><th>기간</th><td><input type='date' name='startDate' value='%s'> ~"
                     + "<input type='date' name='endDate' value='%s'></td></tr>", team.getStartDate(), team.getEndDate());
             out.println("</table>");
+            out.println("<p>");
+            out.println("<a href='../index.html'>[첫 화면]</a>");
+            out.println("<a href='list'>[목록]</a>");
+            out.println("<button>변경</button>");
+            out.printf("<a href='delete?name=%s'>[삭제]</a>\n", name);
+            out.println("</p>");
+            out.println("</form>");
+            
+            
+            List<Member> member = teamMemberDao.selectListWithEmail(name);
             
             
         } catch (Exception e) {
             out.printf("<p>&s</p>",e.getMessage());
+            e.printStackTrace();
         }
-        out.println("<p>");
-        out.println("<a href='../index.html'>[첫 화면]</a>");
-        out.println("<a href='list'>[목록]</a>");
-        out.println("<button>변경</button>");
-        out.printf("<a href='delete?name=%s'>[삭제]</a>\n", name);
-        out.println("</p>");
-        out.println("</form>");
         out.println("</body>");
         out.println("</html>"); 
+        
     }
 }
 

@@ -7,6 +7,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.stereotype.Component;
 
+import bitcamp.java106.pms.domain.Member;
+
 @Component
 public class TeamMemberDao {
 
@@ -61,6 +63,13 @@ public class TeamMemberDao {
                 return true;
             else 
                 return false;
+        }
+    }
+
+    public List<Member> selectListWithEmail(String name)  throws Exception {
+        try (SqlSession sqlSession = this.sqlSessionFactory.openSession()) {
+            return sqlSession.selectList(
+                    "bitcamp.java106.pms.dao.TeamMemberDao.selectListWithEmail", name);
         }
     }
 }
