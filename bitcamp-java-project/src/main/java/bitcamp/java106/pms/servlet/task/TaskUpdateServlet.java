@@ -1,17 +1,16 @@
-// Controller 규칙에 따라 메서드 작성
 package bitcamp.java106.pms.servlet.task;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.net.URLEncoder;
 import java.sql.Date;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import bitcamp.java106.pms.dao.MemberDao;
 import bitcamp.java106.pms.dao.TaskDao;
 import bitcamp.java106.pms.dao.TeamDao;
 import bitcamp.java106.pms.dao.TeamMemberDao;
@@ -26,14 +25,12 @@ public class TaskUpdateServlet extends HttpServlet {
     
     TeamDao teamDao;
     TaskDao taskDao;
-    MemberDao memberDao;
     TeamMemberDao teamMemberDao;
     
     @Override
     public void init() throws ServletException {
         teamDao = InitServlet.getApplicationContext().getBean(TeamDao.class);
         taskDao = InitServlet.getApplicationContext().getBean(TaskDao.class);
-        memberDao = InitServlet.getApplicationContext().getBean(MemberDao.class);
         teamMemberDao = InitServlet.getApplicationContext().getBean(TeamMemberDao.class);
     }
     
@@ -41,22 +38,9 @@ public class TaskUpdateServlet extends HttpServlet {
     protected void doPost(
             HttpServletRequest request, 
             HttpServletResponse response) throws ServletException, IOException {
-
+        
         request.setCharacterEncoding("UTF-8");
         String teamName = request.getParameter("teamName");
-        
-        response.setContentType("text/html;charset=UTF-8"); 
-        PrintWriter out = response.getWriter();
-        
-        out.println("<!DOCTYPE html>");
-        out.println("<html>");
-        out.println("<head>");
-        out.println("<meta charset='UTF-8'>");
-        out.printf("<meta http-equiv='Refresh' content='1;url=list?teamName=%s'>\n", teamName);
-        out.println("<title>작업 변경</title>");
-        out.println("</head>");
-        out.println("<body>");
-        out.println("<h1>작업 변경 결과</h1>");
         
         try {
             Task task = new Task()
@@ -70,20 +54,27 @@ public class TaskUpdateServlet extends HttpServlet {
             
             int count = taskDao.update(task);
             if (count == 0) {
-                out.println("<p>해당 작업이 없습니다.</p>");
-            } else {
-                out.println("<p>변경하였습니다.</p>");
+                throw new Exception("<p>해당 작업이 없습니다.</p>");
             }
+            response.sendRedirect("list?teamName=" + 
+                    URLEncoder.encode(teamName, "UTF-8"));
+            // 응답 헤더의 값으로 한글을 포함할 때는 
+            // 서블릿 컨테이너가 자동으로 URL 인코딩 하지 않는다.
+            // 위와 같이 개발자가 직접 URL 인코딩 해야 한다.
+            
         } catch (Exception e) {
-            out.println("변경 실패!");
-            e.printStackTrace(out);
+            RequestDispatcher 요청배달자 = request.getRequestDispatcher("/error");
+            request.setAttribute("error", e);
+            request.setAttribute("title", "작업 변경 실패!");
+            요청배달자.forward(request, response);
         }
-        out.println("</body>");
-        out.println("</html>");
     }
-
+    
 }
 
+//ver 39 - forward 적용
+//ver 38 - redirect 적용
+//ver 37 - 컨트롤러를 서블릿으로 변경
 //ver 31 - JDBC API가 적용된 DAO 사용
 //ver 28 - 네트워크 버전으로 변경
 //ver 26 - TaskController에서 update() 메서드를 추출하여 클래스로 정의.

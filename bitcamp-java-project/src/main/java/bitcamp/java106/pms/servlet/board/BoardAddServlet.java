@@ -1,9 +1,8 @@
 package bitcamp.java106.pms.servlet.board;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Date;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,46 +32,35 @@ public class BoardAddServlet extends HttpServlet {
             HttpServletRequest request, 
             HttpServletResponse response) throws ServletException, IOException {
         
-        // 클라이언트가 보낸 데이터가 어떤 문자표를 사용해서 작성한지 알아야만 
-        // String 객체(UTF-16)로 값을 꺼낼 수 있다. 
         request.setCharacterEncoding("UTF-8");
         
-        Board board = new Board();
-        board.setTitle(request.getParameter("title"));
-        board.setContent(request.getParameter("content"));
-        board.setCreatedDate(new Date(System.currentTimeMillis()));
-        
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        
-        out.println("<!DOCTYPE html>");
-        out.println("<html>");
-        out.println("<head>");
-        out.println("<meta charset='UTF-8'>");
-        
-        // 지정된 시간이 경과하면 특정 서블릿을 요청하도록 태그를 삽입!
-        // => 웹브라우저는 meta 태그의 내용대로 동작한다.
-        //    content='경과시간(초);url=요청할URL'
-        //
-        out.println("<meta http-equiv='Refresh' content='1;url=list'>");
-        
-        out.println("<title>게시물 등록</title>");
-        out.println("</head>");
-        out.println("<body>");
-        out.println("<h1>게시물 등록 결과</h1>");
         try {
+            Board board = new Board();
+            board.setTitle(request.getParameter("title"));
+            board.setContent(request.getParameter("content"));
+
             boardDao.insert(board);
-            out.println("<p>등록 성공!</p>");
+            response.sendRedirect("list");
+            
         } catch (Exception e) {
-            out.println("<p>등록 실패!</p>");
-            e.printStackTrace(out);
+            // 예외가 발생하면 ErrorServlet으로 예외 내용을 출력하도록 실행을 위임한다.
+            // 1) 실행을 위임할 객체를 준비한다.
+            RequestDispatcher 요청배달자 = request.getRequestDispatcher("/error");
+            
+            // 2) 다른 서블릿에게 실행을 위임하기 전에 그 서블릿에 전달할 데이터가 있다면,
+            //    ServletRequest 보관소에 담아라.
+            request.setAttribute("error", e);
+            request.setAttribute("title", "게시물 등록 실패!");
+            
+            // 3) 다른 서블릿으로 실행을 위임한다.
+            요청배달자.forward(request, response);
         }
-        out.println("</body>");
-        out.println("</html>");
     }
 
 }
 
+//ver 39 - forward 적용
+//ver 38 - redirect 적용
 //ver 37 - BoardAddController 클래스를 서블릿으로 변경
 //         출력 결과를 HTML로 변경
 //         자동 Refresh 태그 추가

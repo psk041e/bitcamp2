@@ -1,8 +1,8 @@
 package bitcamp.java106.pms.servlet.teammember;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,7 +25,8 @@ public class TeamMemberDeleteServlet extends HttpServlet {
         teamDao = InitServlet.getApplicationContext().getBean(TeamDao.class);
         teamMemberDao = InitServlet.getApplicationContext().getBean(TeamMemberDao.class);
     }
-
+    
+    @Override
     protected void doGet(
             HttpServletRequest request, 
             HttpServletResponse response) throws ServletException, IOException {
@@ -34,35 +35,27 @@ public class TeamMemberDeleteServlet extends HttpServlet {
         String teamName = request.getParameter("teamName");
         String memberId = request.getParameter("memberId");
         
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
         
-        out.println("<!DOCTYPE html>");
-        out.println("<html>");
-        out.println("<head>");
-        out.println("<meta charset='UTF-8'>");
-        out.printf("<meta http-equiv='Refresh' content='1;url=../view?name=%s'>\n", 
-                teamName);
-        out.println("<title>팀 회원 삭제</title>");
-        out.println("</head>");
-        out.println("<body>");
-        out.println("<h1>팀 회원 삭제 결과</h1>");
         try {
             int count = teamMemberDao.delete(teamName, memberId);
             if (count == 0) {
-                out.println("<p>해당 팀원이 존재하지 않습니다.</p>");
-            } else {
-                out.println("<p>팀에서 회원을 삭제하였습니다.</p>");
+                throw new Exception("<p>해당 팀원이 존재하지 않습니다.</p>");
             }
+            response.sendRedirect("../view?name=" + teamName);
+            
         } catch (Exception e) {
-            out.println("<p>팀 회원 삭제 실패!</p>");
-            e.printStackTrace(out);
+            RequestDispatcher 요청배달자 = request.getRequestDispatcher("/error");
+            request.setAttribute("error", e);
+            request.setAttribute("title", "팀 회원 삭제 실패!");
+            요청배달자.forward(request, response);
         }
-        out.println("</body>");
-        out.println("</html>");
     }
+    
 }
 
+//ver 39 - forward 적용
+//ver 38 - redirect 적용
+//ver 37 - 컨트롤러를 서블릿으로 변경
 //ver 31 - JDBC API가 적용된 DAO 사용
 //ver 28 - 네트워크 버전으로 변경
 //ver 26 - TeamMemberController에서 delete() 메서드를 추출하여 클래스로 정의.

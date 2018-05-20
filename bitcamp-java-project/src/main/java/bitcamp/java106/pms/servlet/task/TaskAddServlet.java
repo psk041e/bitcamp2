@@ -2,9 +2,11 @@ package bitcamp.java106.pms.servlet.task;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URLEncoder;
 import java.sql.Date;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -104,29 +106,17 @@ public class TaskAddServlet extends HttpServlet {
             HttpServletResponse response) throws ServletException, IOException {
         
         request.setCharacterEncoding("UTF-8");
-        
-        Task task = new Task();
-        task.setTitle(request.getParameter("title"));
-        task.setStartDate(Date.valueOf(request.getParameter("startDate")));
-        task.setEndDate(Date.valueOf(request.getParameter("endDate")));
-        task.setTeam(new Team().setName(request.getParameter("teamName")));
-        task.setWorker(new Member().setId(request.getParameter("memberId")));
-        
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        
-        out.println("<!DOCTYPE html>");
-        out.println("<html>");
-        out.println("<head>");
-        out.println("<meta charset='UTF-8'>");
-        out.printf("<meta http-equiv='Refresh' content='1;url=list?teamName=%s'>\n",
-                task.getTeam().getName());
-        out.println("<title>작업 등록</title>");
-        out.println("</head>");
-        out.println("<body>");
-        out.println("<h1>작업 등록 결과</h1>");
+
+        String teamName = request.getParameter("teamName");
         
         try {
+            Task task = new Task();
+            task.setTitle(request.getParameter("title"));
+            task.setStartDate(Date.valueOf(request.getParameter("startDate")));
+            task.setEndDate(Date.valueOf(request.getParameter("endDate")));
+            task.setTeam(new Team().setName(teamName));
+            task.setWorker(new Member().setId(request.getParameter("memberId")));
+            
             Team team = teamDao.selectOne(task.getTeam().getName());
             if (team == null) {
                 throw new Exception(task.getTeam().getName() + " 팀은 존재하지 않습니다.");
@@ -139,17 +129,24 @@ public class TaskAddServlet extends HttpServlet {
             }
             
             taskDao.insert(task);
-            out.println("<p>등록 성공!</p>");
+            response.sendRedirect("list?teamName=" + 
+                    URLEncoder.encode(teamName, "UTF-8"));
+            // 응답 헤더의 값으로 한글을 포함할 때는 
+            // 서블릿 컨테이너가 자동으로 URL 인코딩 하지 않는다.
+            // 위와 같이 개발자가 직접 URL 인코딩 해야 한다.
             
         } catch (Exception e) {
-            out.printf("<p>%s</p>\n", e.getMessage());
-            e.printStackTrace();
+            RequestDispatcher 요청배달자 = request.getRequestDispatcher("/error");
+            request.setAttribute("error", e);
+            request.setAttribute("title", "작업 등록 실패!");
+            요청배달자.forward(request, response);
         }
-        out.println("</body>");
-        out.println("</html>");
     }
-
+    
 }
+
+//ver 39 - forward 적용
+//ver 38 - redirect 적용
 //ver 37 - 컨트롤러를 서블릿으로 변경
 //ver 31 - JDBC API가 적용된 DAO 사용
 //ver 28 - 네트워크 버전으로 변경
