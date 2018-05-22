@@ -1,11 +1,10 @@
 # 변경 내역
-- BoardAddServlet, BoardUpdateServlet, BoardDeleteServlet 변경
-- ClassroomAddServlet, ClassroomUpdateServlet, ClassroomDeleteServlet 변경
-- MemberAddServlet, MemberUpdateServlet, MemberDeleteServlet 변경
-- TeamAddServlet, TeamUpdateServlet, TeamDeleteServlet 변경
-- TeamMemberAddServlet, TeamMemberDeleteServlet 변경
-- TaskAddServlet, TaskUpdateServlet, TaskDeleteServlet, TaskListServlet 변경
-
+- 모든 서블릿 변경
+- CharacterEncodingFilter 추가 
+- ContextLoaderListener 추가
+- WebApplicationContextUtils 추가 
+- web.xml 변경 
+- InitServlet 제거
 
 
 

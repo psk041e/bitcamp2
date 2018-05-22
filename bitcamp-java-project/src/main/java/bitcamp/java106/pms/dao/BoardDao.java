@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import bitcamp.java106.pms.domain.Board;
 
 @Component
-public class BoardDao {
+public class BoardDao { 
     
     SqlSessionFactory sqlSessionFactory;
     
