@@ -48,6 +48,10 @@ public class BoardListServlet extends HttpServlet {
         out.println("<title>게시물 목록</title>");
         out.println("</head>");
         out.println("<body>");
+        
+        // 여기는 로그인/로그아웃을 창을 띄우기 위한 header에 추가
+        request.getRequestDispatcher("/header").include(request, response);
+        
         out.println("<h1>게시물 목록</h1>");
         try {
             List<Board> list = boardDao.selectList();

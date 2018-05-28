@@ -52,6 +52,10 @@ public class TaskListServlet extends HttpServlet {
         out.println("<title>작업 목록</title>");
         out.println("</head>");
         out.println("<body>");
+        
+        // 여기는 로그인/로그아웃을 창을 띄우기 위한 header에 추가
+        request.getRequestDispatcher("/header").include(request, response);
+        
         out.printf("<h1><a href='../team/view?name=%s'>%s</a>의 작업 목록</h1>\n", 
                 teamName, teamName);
         

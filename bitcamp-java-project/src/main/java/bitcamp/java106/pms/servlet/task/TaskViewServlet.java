@@ -53,6 +53,10 @@ public class TaskViewServlet extends HttpServlet {
         out.println("<title>작업 보기</title>");
         out.println("</head>");
         out.println("<body>");
+        
+        // 여기는 로그인/로그아웃을 창을 띄우기 위한 header에 추가
+        request.getRequestDispatcher("/header").include(request, response);
+        
         out.println("<h1>작업 보기</h1>");
         
         try {

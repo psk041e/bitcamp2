@@ -29,6 +29,13 @@
     where mid=#{value}
   </select>
   
+  <!-- 여기는 로그인 할 용도로 쓰이는 데이터베이스 검사 -->
+  <select id="selectOneWithPassword" parameterType="map" resultMap="MemberMap">
+    select mid, email 
+    from pms2_member 
+    where mid=#{id} and pwd=sha2(#{password},224)
+  </select>
+  
   <update id="update" parameterType="Member">
     update pms2_member set 
         email=#{email}, 

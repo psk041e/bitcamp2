@@ -1,5 +1,46 @@
 # 자바 프로젝트
 
+## src44 - EL과 JSTL 적용
+학습목표
+    - EL과 JSTL을 사용할 수 있다.
+작업내용
+    - JSP 페이지에서 자바 코드를 JSTL 태그와 EL 코드로 대체한다.
+
+## src43 - JSP 전용 태그 적용 
+학습목표
+    - JSP 전용 태그(JSP action tag)를 사용할 수 있다.
+작업내용
+    - include, forward를 JSP 전용 태그로 처리한다.
+    - ServletRequest 에서 값을 꺼내는 부분을 JSP 전용 태그로 처리한다. 
+    
+## src42 - JSP 적용
+학습목표
+    - JSP를 적용하여 MVC 아키텍처를 완성한다.
+    - JSP를 활용할 수 있다.
+작업내용
+    - 서블릿에서 수행하던 UI 출력을 JSP로 옮긴다.
+
+## src41 - 쿠키와 세션 기술 적용
+학습목표
+    - 쿠키와 세션을 이용하여 로그인을 처리할 수 있다.
+    - Referer 헤더의 용도를 이해한다.
+작업내용
+    - 쿠키를 이용하여 아이디를 기억하는 로그인 폼 만들기
+    - 세션을 이용하여 로그인 사용자 정보를 보관하고 사용하기
+    - 로그인 후 Referer 헤더 값을 참조하여 이전 페이지로 이동하게 한다.
+    
+## src40 - Filter, Listener 기술 적용
+학습목표
+    - 필터의 구동 원리를 이해하고 적용할 수 있다.
+    - FilterConfig 객체를 사용하여 web.xml에 있는 init-param 값을 사용할 수 있다.
+    - 리스너의 구동 원리를 이해하고 적용할 수 있다.
+    - 컨텍스트 파라미터를 설정하고 사용할 수 있다.
+작업내용
+    - Filter에서 클라이언트 데이터 인코딩 지정을 수행한다.
+      (CharacterEncodingFilter)
+    - ServletContextListener 구현체에서 스프링 IoC 컨테이너 준비
+      (ContextLoaderListener, WebApplicationContextUtils)
+      
 ## src39 - forward, include 기술 적용 
 학습목표
     - forward와 include의 용도를 이해하고 적용할 수 있다.
