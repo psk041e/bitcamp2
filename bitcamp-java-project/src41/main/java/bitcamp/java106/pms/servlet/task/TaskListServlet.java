@@ -1,4 +1,4 @@
-package bitcamp.java106.pms.servlet.team;
+package bitcamp.java106.pms.servlet.task;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,15 +13,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.context.ApplicationContext;
 
+import bitcamp.java106.pms.dao.TaskDao;
 import bitcamp.java106.pms.dao.TeamDao;
+import bitcamp.java106.pms.domain.Task;
 import bitcamp.java106.pms.domain.Team;
 import bitcamp.java106.pms.support.WebApplicationContextUtils;
 
 @SuppressWarnings("serial")
-@WebServlet("/team/list")
-public class TeamListServlet extends HttpServlet {
-
+@WebServlet("/task/list")
+public class TaskListServlet extends HttpServlet {
+    
     TeamDao teamDao;
+    TaskDao taskDao;
     
     @Override
     public void init() throws ServletException {
@@ -29,14 +32,16 @@ public class TeamListServlet extends HttpServlet {
                 WebApplicationContextUtils.getWebApplicationContext(
                         this.getServletContext()); 
         teamDao = iocContainer.getBean(TeamDao.class);
+        taskDao = iocContainer.getBean(TaskDao.class);
     }
-
-
+    
     @Override
     protected void doGet(
             HttpServletRequest request, 
             HttpServletResponse response) throws ServletException, IOException {
         
+        String teamName = request.getParameter("teamName");
+
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         
@@ -44,39 +49,47 @@ public class TeamListServlet extends HttpServlet {
         out.println("<html>");
         out.println("<head>");
         out.println("<meta charset='UTF-8'>");
-        out.println("<title>팀 목록</title>");
+        out.println("<title>작업 목록</title>");
         out.println("</head>");
         out.println("<body>");
         
         // 여기는 로그인/로그아웃을 창을 띄우기 위한 header에 추가
         request.getRequestDispatcher("/header").include(request, response);
         
-        out.println("<h1>팀 목록</h1>");
+        out.printf("<h1><a href='../team/view?name=%s'>%s</a>의 작업 목록</h1>\n", 
+                teamName, teamName);
         
         try {
-            List<Team> list = teamDao.selectList();
+            Team team = teamDao.selectOne(teamName);
+            if (team == null) {
+                throw new Exception(teamName + " 팀은 존재하지 않습니다.");
+            }
+            List<Task> list = taskDao.selectList(team.getName());
             
-            out.println("<p><a href='form.html'>새 팀</a></p>");
+            out.printf("<p><a href='add?teamName=%s'>새작업</a></p>\n", teamName);
             out.println("<table border='1'>");
             out.println("<tr>");
-            out.println("    <th>팀명</th><th>최대인원</th><th>기간</th>");
+            out.println("    <th>번호</th><th>작업명</th><th>기간</th><th>작업자</th>");
             out.println("</tr>");
             
-            for (Team team : list) {
+            for (Task task : list) {
                 out.println("<tr>");
-                out.printf("    <td><a href='view?name=%s'>%s</a></td><td>%d</td><td>%s~%s</td>\n",
-                        team.getName(),
-                        team.getName(),
-                        team.getMaxQty(), 
-                        team.getStartDate(), 
-                        team.getEndDate());
+                out.printf("    <td>%d</td>", task.getNo());
+                out.printf("    <td><a href='view?no=%d'>%s</a></td>", 
+                        task.getNo(),
+                        task.getTitle());
+                out.printf("    <td>%s ~ %s</td>", 
+                        task.getStartDate(),
+                        task.getEndDate());
+                out.printf("    <td>%s</td>\n", 
+                        (task.getWorker() == null) ? "-" : task.getWorker().getId());
                 out.println("</tr>");
             }
             out.println("</table>");
         } catch (Exception e) {
             RequestDispatcher 요청배달자 = request.getRequestDispatcher("/error");
             request.setAttribute("error", e);
-            request.setAttribute("title", "팀 목록조회 실패!");
+            request.setAttribute("title", "작업 목록조회 실패!");
             // 다른 서블릿으로 실행을 위임할 때,
             // 이전까지 버퍼로 출력한 데이터는 버린다.
             요청배달자.forward(request, response);
@@ -84,17 +97,17 @@ public class TeamListServlet extends HttpServlet {
         out.println("</body>");
         out.println("</html>");
     }
+
 }
 
+//ver 40 - CharacterEncodingFilter 필터 적용.
+//         request.setCharacterEncoding("UTF-8") 제거
 //ver 39 - forward 적용
 //ver 37 - 컨트롤러를 서블릿으로 변경
 //ver 31 - JDBC API가 적용된 DAO 사용
 //ver 28 - 네트워크 버전으로 변경
-//ver 26 - TeamController에서 list() 메서드를 추출하여 클래스로 정의.
+//ver 26 - TaskController에서 list() 메서드를 추출하여 클래스로 정의.
 //ver 23 - @Component 애노테이션을 붙인다.
 //ver 22 - TaskDao 변경 사항에 맞춰 이 클래스를 변경한다.
-//ver 18 - ArrayList가 적용된 TeamDao를 사용한다.
-//ver 16 - 인스턴스 변수를 직접 사용하는 대신 겟터, 셋터 사용.
-// ver 15 - TeamDao를 생성자에서 주입 받도록 변경.
-// ver 14 - TeamDao를 사용하여 팀 데이터를 관리한다.
-// ver 13 - 시작일, 종료일을 문자열로 입력 받아 Date 객체로 변환하여 저장.
+//ver 18 - ArrayList가 적용된 TaskDao를 사용한다.
+//ver 17 - 클래스 생성
