@@ -41,6 +41,28 @@
     <request-character-encoding>UTF-8</request-character-encoding>
     -->
     
+    <!-- 프론트 컨트롤러 서블릿 등록 및 정보 설정 -->
+    <servlet>
+        <servlet-name>dispatcher</servlet-name>
+        <servlet-class>bitcamp.java106.pms.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>config/dispatcher-servlet.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>dispatcher</servlet-name>
+        <url-pattern>*.do</url-pattern>
+    </servlet-mapping>
+    
+    
+    <!-- 서블릿 실행 도중 특정 예외가 발생하면 실행될 JSP를 지정한다. -->
+    <error-page>
+        <exception-type>java.lang.Throwable</exception-type>
+        <location>/error.jsp</location>
+    </error-page>
+    
     <!-- 클라이언트가 요청한 자원을 찾을 수 없을 때 
          서블릿 컨테이너는 URL로 지정된 폴더를 찾는다. 
          그리고 다음에 나열된 파일을 순서대로 찾는다.
